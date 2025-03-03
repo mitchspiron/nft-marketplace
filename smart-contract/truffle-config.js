@@ -1,3 +1,4 @@
+require("dotenv").config();
 module.exports = {
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
@@ -7,8 +8,8 @@ module.exports = {
     // options below to some value.
     //
     development: {
-      host: procces.env.HOST, // Localhost (default: none)
-      port: procces.env.PORT, // Standard Ethereum port (default: none)
+      host: process.env.HOST, // Localhost (default: none)
+      port: process.env.PORT, // Standard Ethereum port (default: none)
       network_id: "*",
     },
     //
