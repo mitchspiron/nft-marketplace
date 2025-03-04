@@ -14,6 +14,7 @@ contract NFTMarket is ReentrancyGuard {
   uint256 listingPrice = 0.025 ether;
 
   constructor() {
+    require(msg.sender != address(0), "Invalid deployer address");
     owner = payable(msg.sender);
   }
 
