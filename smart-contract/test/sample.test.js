@@ -8,7 +8,7 @@ describe("NFTMarket", function () {
     await market.waitForDeployment();
     const marketAddress = market.getAddress();
 
-    expect(marketAddress).to.not.be.null; // Vérifie que l'adresse est valide
+    expect(marketAddress).to.not.be.null; // Check if address is valid
 
     const NFT = await ethers.getContractFactory("NFT");
     const nft = await NFT.deploy(marketAddress);
