@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Search, Menu, X, Bell, User } from "lucide-react";
+import { MenuItems } from "@/constants";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,7 +12,6 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md z-50 border-b border-white/10">
       <div className="container max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo et Nom */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="relative h-8 w-8 bg-white rounded-sm">
               <div className="absolute inset-1 bg-black rounded-sm"></div>
@@ -23,13 +23,13 @@ export default function Navbar() {
 
           {/* Navigation principale - Desktop */}
           <nav className="hidden md:flex space-x-8">
-            {["Explore", "Collections", "Artists", "Community"].map((item) => (
+            {MenuItems.map((item) => (
               <Link
-                key={item}
-                href={`/${item.toLowerCase()}`}
+                key={item.name}
+                href={item.link}
                 className="text-gray-300 hover:text-white transition-colors relative group"
               >
-                {item}
+                {item.name}
                 <span className="absolute bottom-0 left-0 h-px w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
@@ -78,17 +78,15 @@ export default function Navbar() {
         <div className="md:hidden bg-black/90 backdrop-blur-md border-t border-white/10">
           <div className="container max-w-7xl mx-auto px-4 py-4">
             <nav className="flex flex-col space-y-4">
-              {["Explore", "Collections", "Artists", "Community"].map(
-                (item) => (
-                  <Link
-                    key={item}
-                    href={`/${item.toLowerCase()}`}
-                    className="text-gray-300 hover:text-white py-2 transition-colors"
-                  >
-                    {item}
-                  </Link>
-                )
-              )}
+              {MenuItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.link}
+                  className="text-gray-300 hover:text-white py-2 transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ))}
             </nav>
 
             <div className="mt-6 space-y-4">

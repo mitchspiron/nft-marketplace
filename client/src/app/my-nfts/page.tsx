@@ -11,12 +11,7 @@ import {
   ChevronDown,
   Check,
   Wallet,
-  Tag,
-  Clock,
-  ArrowUpRight,
-  User,
 } from "lucide-react";
-import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,22 +31,21 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import NFTDisplay from "@/components/nft-display/NFTDisplay";
+import { NFT } from "@/types/nft";
 
 export default function MyNFTs() {
-  // États pour gérer les filtres et l'affichage
-  const [viewMode, setViewMode] = useState("grid");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [collectionFilter, setCollectionFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("owned");
   const [sortBy, setSortBy] = useState("recent");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Collections fictives pour les filtres
   const collections = [
     "Toutes les collections",
     "Bored Ape Yacht Club",
@@ -64,7 +58,6 @@ export default function MyNFTs() {
     "CloneX",
   ];
 
-  // Données fictives pour les NFTs possédés
   const myNFTs = [
     {
       id: 101,
@@ -73,9 +66,12 @@ export default function MyNFTs() {
       price: "1.25 ETH",
       priceUSD: "$2,150",
       purchaseDate: "15 Jan 2025",
+      artist: "CyberArtist",
+      timeLeft: "6h 23m",
       likes: 124,
       image: "/images/nft1.jpg",
       status: "owned",
+      category: "Art Digital",
     },
     {
       id: 102,
@@ -87,6 +83,9 @@ export default function MyNFTs() {
       likes: 87,
       image: "/images/nft2.jpg",
       status: "owned",
+      category: "Collectibles",
+      artist: "DigitalEther",
+      timeLeft: "2h 05m",
     },
     {
       id: 103,
@@ -98,6 +97,9 @@ export default function MyNFTs() {
       likes: 209,
       image: "/images/nft3.jpg",
       status: "owned",
+      category: "Art Digital",
+      artist: "NeoBrush",
+      timeLeft: "12h 40m",
     },
     {
       id: 104,
@@ -109,6 +111,9 @@ export default function MyNFTs() {
       likes: 176,
       image: "/images/nft5.jpg",
       status: "owned",
+      category: "Art Digital",
+      artist: "StarDust",
+      timeLeft: "9h 18m",
     },
     {
       id: 105,
@@ -122,6 +127,9 @@ export default function MyNFTs() {
       status: "on_sale",
       listedPrice: "0.55 ETH",
       listedPriceUSD: "$946",
+      category: "Gaming",
+      artist: "Pixel8",
+      timeLeft: "3h 12m",
     },
     {
       id: 106,
@@ -135,6 +143,9 @@ export default function MyNFTs() {
       status: "on_sale",
       listedPrice: "4.25 ETH",
       listedPriceUSD: "$7,310",
+      category: "Musique",
+      artist: "ByteCreator",
+      timeLeft: "4h 55m",
     },
     {
       id: 107,
@@ -148,6 +159,9 @@ export default function MyNFTs() {
       status: "on_sale",
       listedPrice: "1.45 ETH",
       listedPriceUSD: "$2,494",
+      category: "Art Digital",
+      artist: "NeonWave",
+      timeLeft: "8h 10m",
     },
     {
       id: 108,
@@ -159,10 +173,13 @@ export default function MyNFTs() {
       likes: 102,
       image: "/images/nft9.jpg",
       status: "owned",
+      category: "Art Digital",
+      artist: "DigitalVortex",
+      timeLeft: "1d 5h",
     },
   ];
 
-  // Statistiques utilisateur
+  // User stats
   const userStats = {
     totalValue: "12.75 ETH",
     totalValueUSD: "$21,930",
@@ -174,26 +191,22 @@ export default function MyNFTs() {
     joinDate: "Nov 2024",
   };
 
-  // Filtrage des NFTs selon les critères
-  const filteredNFTs = myNFTs
+  // NFT Filter
+  const filteredNFTs: NFT[] = myNFTs
     .filter((nft) => {
-      // Filtre par recherche
       const matchesSearch =
         nft.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         nft.collection.toLowerCase().includes(searchQuery.toLowerCase());
 
-      // Filtre par collection
       const matchesCollection =
         collectionFilter === "all" || nft.collection === collectionFilter;
 
-      // Filtre par statut
       const matchesStatus =
         statusFilter === "all" || nft.status === statusFilter;
 
       return matchesSearch && matchesCollection && matchesStatus;
     })
     .sort((a, b) => {
-      // Tri des NFTs
       const dateA = new Date(a.purchaseDate).getTime() || 0;
       const dateB = new Date(b.purchaseDate).getTime() || 0;
       if (sortBy === "recent") {
@@ -211,7 +224,6 @@ export default function MyNFTs() {
   return (
     <section className="bg-black min-h-screen pt-28 pb-20">
       <div className="container max-w-7xl mx-auto px-6">
-        {/* En-tête du profil */}
         <div className="mb-12">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
             <div className="h-20 w-20 md:h-24 md:w-24 rounded-full overflow-hidden border-2 border-white/20">
@@ -239,12 +251,12 @@ export default function MyNFTs() {
                   variant="outline"
                   className="bg-white/5 border-white/10 text-white hover:bg-white/10 rounded-sm"
                 >
-                  Modifier le profil
+                  Edit profil
                 </Button>
               </div>
               <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="bg-white/5 backdrop-blur-md rounded-sm border border-white/10 p-4">
-                  <p className="text-gray-400 text-sm mb-1">Valeur totale</p>
+                  <p className="text-gray-400 text-sm mb-1">Total value</p>
                   <p className="text-white font-bold text-lg">
                     {userStats.totalValue}
                   </p>
@@ -253,7 +265,7 @@ export default function MyNFTs() {
                   </p>
                 </div>
                 <div className="bg-white/5 backdrop-blur-md rounded-sm border border-white/10 p-4">
-                  <p className="text-gray-400 text-sm mb-1">NFTs possédés</p>
+                  <p className="text-gray-400 text-sm mb-1">NFTs owned</p>
                   <p className="text-white font-bold text-lg">
                     {userStats.nftsOwned}
                   </p>
@@ -265,7 +277,7 @@ export default function MyNFTs() {
                   </p>
                 </div>
                 <div className="bg-white/5 backdrop-blur-md rounded-sm border border-white/10 p-4">
-                  <p className="text-gray-400 text-sm mb-1">Membre depuis</p>
+                  <p className="text-gray-400 text-sm mb-1">Member since</p>
                   <p className="text-white font-bold text-lg">
                     {userStats.joinDate}
                   </p>
@@ -282,7 +294,7 @@ export default function MyNFTs() {
               value="mynfts"
               className="text-white py-4 px-6 border-b-2 border-transparent data-[state=active]:border-white data-[state=active]:bg-transparent focus:ring-0 rounded-none data-[state=active]:text-white cursor-pointer"
             >
-              Mes NFTs
+              My NFTs
             </TabsTrigger>
             <TabsTrigger
               value="collected"
@@ -294,18 +306,17 @@ export default function MyNFTs() {
               value="favorites"
               className="text-white py-4 px-6 border-b-2 border-transparent data-[state=active]:border-white data-[state=active]:bg-transparent focus:ring-0 rounded-none data-[state=active]:text-white cursor-pointer"
             >
-              Favoris
+              Favorites
             </TabsTrigger>
             <TabsTrigger
               value="activity"
               className="text-white py-4 px-6 border-b-2 border-transparent data-[state=active]:border-white data-[state=active]:bg-transparent focus:ring-0 rounded-none data-[state=active]:text-white cursor-pointer"
             >
-              Activité
+              Activity
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="mynfts" className="mt-0">
-            {/* Barre de recherche et filtres */}
             <div className="relative mb-10">
               <Input
                 type="text"
@@ -317,11 +328,9 @@ export default function MyNFTs() {
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-gray-400" />
             </div>
 
-            {/* Filtres et options d'affichage */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
               {/* Filtres */}
               <div className="flex flex-wrap gap-4">
-                {/* Filtre par statut */}
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
                   <SelectTrigger className="bg-white/5 border-white/10 text-white hover:bg-white/10 rounded-sm w-[150px] cursor-pointer">
                     <SelectValue placeholder="Statut" />
@@ -339,7 +348,6 @@ export default function MyNFTs() {
                   </SelectContent>
                 </Select>
 
-                {/* Filtre par collection */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
@@ -372,7 +380,6 @@ export default function MyNFTs() {
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                {/* Tri */}
                 <Select value={sortBy} onValueChange={setSortBy}>
                   <SelectTrigger className="bg-white/5 border-white/10 text-white hover:bg-white/10 rounded-sm w-[180px] cursor-pointer">
                     <SelectValue placeholder="Trier par" />
@@ -397,7 +404,7 @@ export default function MyNFTs() {
                 </Select>
               </div>
 
-              {/* Contrôles d'affichage */}
+              {/* Displaying */}
               <div className="flex items-center space-x-2">
                 <Button
                   variant="outline"
@@ -422,215 +429,19 @@ export default function MyNFTs() {
               </div>
             </div>
 
-            {/* Affichage des NFTs */}
             <div className="mb-4">
               <p className="text-gray-400">
                 {filteredNFTs.length} {filteredNFTs.length > 1 ? "NFTs" : "NFT"}{" "}
-                trouvés
+                found
               </p>
             </div>
 
-            {viewMode === "grid" ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredNFTs.map((nft) => (
-                  <div
-                    key={nft.id}
-                    className="group relative bg-white/5 backdrop-blur-md rounded-sm border border-white/10 overflow-hidden transition-all duration-300 hover:bg-white/10 hover:border-white/20"
-                  >
-                    <div className="aspect-square w-full overflow-hidden">
-                      <img
-                        src={nft.image}
-                        alt={nft.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale contrast-125"
-                      />
-                    </div>
-
-                    {nft.status === "on_sale" && (
-                      <div className="absolute top-3 left-3 bg-emerald-500/80 backdrop-blur-md rounded-sm px-3 py-1.5 flex items-center gap-1.5">
-                        <Tag className="h-3.5 w-3.5 text-white" />
-                        <span className="text-xs text-white font-medium">
-                          En vente
-                        </span>
-                      </div>
-                    )}
-
-                    <div className="p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-lg font-bold text-white">
-                          {nft.title}
-                        </h3>
-                        <div className="flex items-center gap-1.5">
-                          <Heart className="h-4 w-4 text-gray-400" />
-                          <span className="text-xs text-gray-400">
-                            {nft.likes}
-                          </span>
-                        </div>
-                      </div>
-
-                      <p className="text-sm text-gray-400 mb-4">
-                        {nft.collection}
-                      </p>
-
-                      <div className="flex items-center justify-between">
-                        <div>
-                          {nft.status === "on_sale" ? (
-                            <>
-                              <div className="bg-white/10 rounded-sm px-3 py-1">
-                                <span className="text-white font-medium">
-                                  {nft.listedPrice}
-                                </span>
-                              </div>
-                              <p className="text-xs text-gray-500 mt-1">
-                                {nft.listedPriceUSD}
-                              </p>
-                            </>
-                          ) : (
-                            <>
-                              <div className="bg-white/10 rounded-sm px-3 py-1">
-                                <span className="text-white font-medium">
-                                  {nft.price}
-                                </span>
-                              </div>
-                              <p className="text-xs text-gray-500 mt-1">
-                                {nft.priceUSD}
-                              </p>
-                            </>
-                          )}
-                        </div>
-
-                        {nft.status === "on_sale" ? (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="rounded-sm border-white/10 text-white hover:bg-white/10"
-                          >
-                            Annuler
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="rounded-sm border-white/20 text-white bg-transparent cursor-pointer"
-                          >
-                            Vendre
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {filteredNFTs.map((nft) => (
-                  <div
-                    key={nft.id}
-                    className="group relative bg-white/5 backdrop-blur-md rounded-sm border border-white/10 overflow-hidden transition-all duration-300 hover:bg-white/10 hover:border-white/20"
-                  >
-                    <div className="flex flex-col md:flex-row">
-                      <div className="w-full md:w-48 h-48 overflow-hidden relative">
-                        <img
-                          src={nft.image}
-                          alt={nft.title}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale contrast-125"
-                        />
-
-                        {nft.status === "on_sale" && (
-                          <div className="absolute top-3 left-3 bg-emerald-500/80 backdrop-blur-md rounded-sm px-3 py-1.5 flex items-center gap-1.5">
-                            <Tag className="h-3.5 w-3.5 text-white" />
-                            <span className="text-xs text-white font-medium">
-                              En vente
-                            </span>
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                          <div className="flex items-center justify-between mb-2">
-                            <h3 className="text-lg font-bold text-white">
-                              {nft.title}
-                            </h3>
-                            <div className="flex items-center gap-4">
-                              <div className="flex items-center gap-1.5">
-                                <Heart className="h-4 w-4 text-gray-400" />
-                                <span className="text-xs text-gray-400">
-                                  {nft.likes}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-
-                          <p className="text-sm text-gray-400 mb-2">
-                            Collection: {nft.collection}
-                          </p>
-                          <p className="text-xs text-gray-500 mb-2">
-                            Acquis le: {nft.purchaseDate}
-                          </p>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <div>
-                            {nft.status === "on_sale" ? (
-                              <>
-                                <div className="bg-white/10 rounded-sm px-3 py-1">
-                                  <span className="text-white font-medium">
-                                    {nft.listedPrice}
-                                  </span>
-                                </div>
-                                <p className="text-xs text-gray-500 mt-1">
-                                  {nft.listedPriceUSD}
-                                </p>
-                              </>
-                            ) : (
-                              <>
-                                <div className="bg-white/10 rounded-sm px-3 py-1">
-                                  <span className="text-white font-medium">
-                                    {nft.price}
-                                  </span>
-                                </div>
-                                <p className="text-xs text-gray-500 mt-1">
-                                  {nft.priceUSD}
-                                </p>
-                              </>
-                            )}
-                          </div>
-
-                          <div className="flex items-center gap-3">
-                            <Button
-                              asChild
-                              variant="default"
-                              size="sm"
-                              className="px-4 py-2 rounded-sm bg-white text-black hover:bg-gray-200"
-                            >
-                              <Link href={`/nft/${nft.id}`}>Voir détails</Link>
-                            </Button>
-
-                            {nft.status === "on_sale" ? (
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="rounded-sm border-white/10 text-white hover:bg-white/10"
-                              >
-                                Annuler la vente
-                              </Button>
-                            ) : (
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="px-4 py-2 rounded-sm border-white/20 text-white bg-transparent cursor-pointer"
-                              >
-                                Mettre en vente
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            {/* Display NFTs */}
+            <NFTDisplay
+              nfts={filteredNFTs}
+              displayMode={viewMode}
+              isProfile={true}
+            />
 
             {/* Pagination */}
             {filteredNFTs.length > 0 && (
@@ -670,11 +481,10 @@ export default function MyNFTs() {
               </div>
             )}
 
-            {/* Message si aucun résultat */}
             {filteredNFTs.length === 0 && (
               <div className="py-20 text-center">
                 <p className="text-gray-400 text-lg mb-4">
-                  Aucun NFT ne correspond à vos critères de recherche.
+                  No NFTs match your search criteria.
                 </p>
                 <Button
                   variant="outline"
@@ -685,7 +495,7 @@ export default function MyNFTs() {
                   }}
                   className="bg-white/5 border-white/10 text-white hover:bg-white/10 rounded-sm"
                 >
-                  Réinitialiser les filtres
+                  Reset filters
                 </Button>
               </div>
             )}
@@ -694,7 +504,7 @@ export default function MyNFTs() {
           <TabsContent value="collected" className="mt-0">
             <div className="py-20 text-center">
               <p className="text-gray-400 text-lg mb-4">
-                Contenu des collections à venir
+                Contents of upcoming collections
               </p>
             </div>
           </TabsContent>
@@ -702,7 +512,7 @@ export default function MyNFTs() {
           <TabsContent value="favorites" className="mt-0">
             <div className="py-20 text-center">
               <p className="text-gray-400 text-lg mb-4">
-                Contenu des favoris à venir
+                Favorites content coming soon
               </p>
             </div>
           </TabsContent>
@@ -710,7 +520,7 @@ export default function MyNFTs() {
           <TabsContent value="activity" className="mt-0">
             <div className="py-20 text-center">
               <p className="text-gray-400 text-lg mb-4">
-                Historique d'activité à venir
+                Upcoming Activity History
               </p>
             </div>
           </TabsContent>

@@ -39,7 +39,7 @@ export default function HeroBanner() {
         <div className="flex flex-col space-y-8 z-10">
           <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-md w-fit px-4 py-2 rounded-sm mb-4">
             <span className="text-gray-300 text-sm font-medium">
-              Découvrez l'univers NFT
+              Discover the NFT universe
             </span>
             <ChevronRight className="h-4 w-4 text-gray-300" />
           </div>
@@ -53,9 +53,9 @@ export default function HeroBanner() {
           </h1>
 
           <p className="text-lg text-gray-400 max-w-xl leading-relaxed">
-            Explorez l'art digital le plus exclusif sur la marketplace NFTVerse.
-            Achetez, vendez et découvrez des items digitaux uniques créés par
-            des artistes talentueux.
+            Explore the most exclusive digital art on the NFTVerse marketplace.
+            Buy, sell and discover unique digital items created by talented
+            artists.
           </p>
 
           <div className="flex flex-wrap gap-6 pt-4">
@@ -92,7 +92,7 @@ export default function HeroBanner() {
             <div className="p-4 bg-white/5 backdrop-blur-md rounded-sm border border-white/10 transition-all hover:bg-white/10 hover:scale-105 duration-300">
               <div className="flex items-center gap-2 mb-2">
                 <Star className="h-5 w-5 text-gray-400" />
-                <div className="text-sm text-gray-500">Artistes</div>
+                <div className="text-sm text-gray-500">Artists</div>
               </div>
               <div className="text-3xl font-bold text-white">10K+</div>
             </div>
@@ -100,7 +100,7 @@ export default function HeroBanner() {
             <div className="p-4 bg-white/5 backdrop-blur-md rounded-sm border border-white/10 transition-all hover:bg-white/10 hover:scale-105 duration-300">
               <div className="flex items-center gap-2 mb-2">
                 <Clock className="h-5 w-5 text-gray-400" />
-                <div className="text-sm text-gray-500">Communauté</div>
+                <div className="text-sm text-gray-500">Community</div>
               </div>
               <div className="text-3xl font-bold text-white">423K+</div>
             </div>
@@ -124,7 +124,7 @@ export default function HeroBanner() {
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="text-xs text-gray-400">
-                        Collection Premium
+                      Collection Premium
                       </p>
                       <h3 className="text-lg font-bold text-white">
                         CyberPunk #2077

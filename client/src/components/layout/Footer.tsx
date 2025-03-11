@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Twitter, Instagram, Linkedin, Github } from "lucide-react";
+import { MenuItems } from "@/constants";
 
 export default function Footer() {
   return (
@@ -23,9 +24,8 @@ export default function Footer() {
             </Link>
 
             <p className="text-gray-400 mb-6 leading-relaxed">
-              Brada NFTs est la marketplace de référence pour découvrir,
-              collectionner et échanger des NFTs exclusifs créés par des
-              artistes du monde entier.
+              Brada NFTs is the leading marketplace to discover, collect and
+              trade exclusive NFTs created by artists from around the world.
             </p>
 
             <div className="flex space-x-4">
@@ -61,19 +61,13 @@ export default function Footer() {
               Marketplace
             </h3>
             <ul className="space-y-3">
-              {[
-                "Explorer",
-                "Collections",
-                "Top NFTs",
-                "Catégories",
-                "Vendre",
-              ].map((item) => (
-                <li key={item}>
+              {MenuItems.map((item) => (
+                <li key={item.name}>
                   <Link
-                    href={`/${item.toLowerCase()}`}
+                    href={item.link}
                     className="text-gray-400 hover:text-white transition-colors relative group"
                   >
-                    {item}
+                    {item.name}
                     <span className="absolute bottom-0 left-0 h-px w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
                   </Link>
                 </li>
@@ -86,14 +80,14 @@ export default function Footer() {
               Newsletter
             </h3>
             <p className="text-gray-400 mb-4">
-              Abonnez-vous pour rester informé des nouveautés et actualités.
+              Subscribe to stay informed about new products and news.
             </p>
 
             <div className="space-y-3">
               <div className="relative">
                 <Input
                   type="email"
-                  placeholder="Votre email"
+                  placeholder="Your email"
                   className="bg-white/5 border border-white/10 rounded-sm text-white pl-4 pr-10 py-2 focus:outline-none focus:ring-1 focus:ring-white/20 focus:bg-white/10 transition-all"
                 />
                 <Button
@@ -104,8 +98,7 @@ export default function Footer() {
                 </Button>
               </div>
               <p className="text-gray-500 text-xs">
-                En vous abonnant, vous acceptez notre politique de
-                confidentialité.
+                By subscribing, you agree to our privacy policy.
               </p>
             </div>
           </div>
@@ -113,7 +106,7 @@ export default function Footer() {
 
         <div className="border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-500 text-sm mb-4 md:mb-0">
-            &copy; {new Date().getFullYear()} Brada NFTs. Tous droits réservés.
+            &copy; {new Date().getFullYear()} Brada NFTs. All rights reserved.
           </p>
 
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
@@ -121,13 +114,13 @@ export default function Footer() {
               href="/privacy"
               className="text-gray-500 hover:text-white text-sm transition-colors"
             >
-              Confidentialité
+              Confidentiality
             </Link>
             <Link
               href="/terms"
               className="text-gray-500 hover:text-white text-sm transition-colors"
             >
-              Conditions d'utilisation
+              Terms of Use
             </Link>
             <Link
               href="/cookies"

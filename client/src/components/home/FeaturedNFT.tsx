@@ -3,63 +3,78 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Heart, Clock, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import GridCard from "../nft-display/GridCard";
 
 export default function RecentNFTs() {
-  // Données factices pour les NFTs récents
   const recentNFTs = [
     {
       id: 1,
       title: "Neon Dreams #423",
       artist: "CyberArtist",
       price: "1.25 ETH",
+      priceUSD: "$2,150",
       timeLeft: "6h 23m",
       likes: 124,
       image: "/images/nft1.jpg",
+      category: "Art Digital",
+      description: "A vibrant digital artwork exploring neon aesthetics",
+      owner: "0x1234567890123456789012345678901234567890",
+      creator: "0x9876543210987654321098765432109876543210",
     },
     {
       id: 2,
       title: "Quantum Realm #89",
       artist: "DigitalEther",
       price: "0.78 ETH",
+      priceUSD: "$1,340",
       timeLeft: "2h 05m",
       likes: 87,
       image: "/images/nft2.jpg",
+      category: "Collectibles",
     },
     {
       id: 3,
       title: "Abstract Future #12",
       artist: "NeoBrush",
       price: "2.15 ETH",
+      priceUSD: "$3,698",
       timeLeft: "12h 40m",
       likes: 209,
       image: "/images/nft3.jpg",
+      category: "Art Digital",
     },
     {
       id: 4,
       title: "Retro Pixel #345",
       artist: "Pixel8",
       price: "0.45 ETH",
+      priceUSD: "$774",
       timeLeft: "3h 12m",
       likes: 65,
       image: "/images/nft4.jpg",
+      category: "Gaming",
     },
     {
       id: 5,
       title: "Cosmic Voyage #72",
       artist: "StarDust",
       price: "1.85 ETH",
+      priceUSD: "$3,182",
       timeLeft: "9h 18m",
       likes: 176,
       image: "/images/nft5.jpg",
+      category: "Art Digital",
     },
     {
       id: 6,
       title: "Digital Soul #221",
       artist: "ByteCreator",
       price: "3.20 ETH",
+      priceUSD: "$5,504",
       timeLeft: "4h 55m",
       likes: 312,
       image: "/images/nft6.jpg",
+      category: "Musique",
     },
   ];
 
@@ -84,15 +99,15 @@ export default function RecentNFTs() {
         <div className="flex items-center justify-between mb-12">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
-              Derniers{" "}
+              Latest{" "}
               <span className="relative">
                 NFTs
                 <span className="absolute -bottom-1 left-0 h-1 w-12 bg-white rounded-sm"></span>
               </span>
             </h2>
             <p className="text-gray-400 mt-3 max-w-xl">
-              Découvrez les dernières œuvres uniques ajoutées à notre
-              marketplace par des artistes du monde entier.
+              Discover the latest unique works added to our marketplace by
+              artists from around the world.
             </p>
           </div>
 
@@ -101,8 +116,8 @@ export default function RecentNFTs() {
             variant="ghost"
             className="hidden md:flex items-center gap-2 text-white hover:bg-white/10 border border-white/10 rounded-sm"
           >
-            <Link href="/explore">
-              Voir tout
+            <Link href="/marketplace">
+              See all
               <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
@@ -110,52 +125,7 @@ export default function RecentNFTs() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {recentNFTs.map((nft) => (
-            <div
-              key={nft.id}
-              className="group relative bg-white/5 backdrop-blur-md rounded-sm border border-white/10 overflow-hidden transition-all duration-300 hover:bg-white/10 hover:border-white/20"
-            >
-              <div className="aspect-square w-full overflow-hidden">
-                <img
-                  src={nft.image}
-                  alt={nft.title}
-                  className="w-full h-full object-cover grayscale contrast-125 transition-transform duration-700 group-hover:scale-110"
-                />
-              </div>
-
-              <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-md rounded-sm px-3 py-1.5 flex items-center gap-1.5">
-                <Clock className="h-3.5 w-3.5 text-gray-300" />
-                <span className="text-xs text-gray-300">{nft.timeLeft}</span>
-              </div>
-
-              <div className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-bold text-white">{nft.title}</h3>
-                  <div className="flex items-center gap-1.5">
-                    <Heart className="h-4 w-4 text-gray-400" />
-                    <span className="text-xs text-gray-400">{nft.likes}</span>
-                  </div>
-                </div>
-
-                <p className="text-sm text-gray-400 mb-4">par {nft.artist}</p>
-
-                <div className="flex items-center justify-between">
-                  <div className="bg-white/10 rounded-sm px-3 py-1">
-                    <span className="text-white font-medium">{nft.price}</span>
-                  </div>
-
-                  <Button
-                    asChild
-                    variant="ghost"
-                    size="sm"
-                    className="p-2 rounded-sm hover:bg-white/10"
-                  >
-                    <Link href={`/nft/${nft.id}`}>
-                      <ArrowUpRight className="h-4 w-4 text-white" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <GridCard key={nft.id} nft={nft} />
           ))}
         </div>
 
@@ -165,8 +135,8 @@ export default function RecentNFTs() {
             variant="ghost"
             className="flex items-center gap-2 text-white hover:bg-white/10 border border-white/10 rounded-sm px-6"
           >
-            <Link href="/explore">
-              Voir toute la collection
+            <Link href="/marketplace">
+              See the entire collection
               <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
