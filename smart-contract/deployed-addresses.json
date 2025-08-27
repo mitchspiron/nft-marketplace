@@ -1,0 +1,10 @@
+{
+  "NFTMarketUpgradeable": "0xD644135aF43BB14A0C438064763b866624C0A19B",
+  "NFTUpgradeable": "0x4406c12c28488C3C5baC931A5d44b9a2F7ea60B5",
+  "listingPrice": "25000000000000000",
+  "deployer": "0x089Abae04Cdcf3F9b24C8d81eab3d3E7Dc9004F2",
+  "network": "ganache",
+  "timestamp": "2025-08-27T19:36:20.700Z",
+  "lastUpgrade": "2025-08-27T19:43:55.882Z",
+  "upgradeCount": 1
+}
